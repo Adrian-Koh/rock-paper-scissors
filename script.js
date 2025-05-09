@@ -55,9 +55,7 @@ function playRound(humanChoice, computerChoice) {
 }
 
 function playGame() {
-
     
-
     for (let i = 0; i < 5; i++) {
         console.log('Start round ' + (i+1));
         let humanSelection = getHumanChoice();
@@ -69,6 +67,16 @@ function playGame() {
         playRound(humanSelection, computerSelection);
 
         console.log(`Your score: ${humanScore}, computer score: ${computerScore}`);
+    }
+
+    if (humanScore > computerScore) {
+        console.log(`You win!`);
+    }
+    else if (humanScore < computerScore) {
+        console.log(`The computer wins!`);
+    }
+    else {
+        console.log(`It's a draw!`);
     }
 }
 
