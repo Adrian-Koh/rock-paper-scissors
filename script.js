@@ -1,3 +1,5 @@
+const moves = ['', 'rock', 'paper', 'scissors'];
+
 let humanScore = 0;
 let computerScore = 0;
 
@@ -13,55 +15,61 @@ function getHumanChoice() {
     return move;
 }
 
-function playRound(humanChoice, computerChoice) {
-    let humanMove;
-
-    switch (humanChoice.toLowerCase()) {
-        case 'rock':
-            humanMove = 1;
-            break;
-        case 'paper':
-            humanMove = 2;
-            break;
-        case 'scissors':
-            humanMove = 3;
-            break;
+function getMessage(humanMove, computerMove) {
+    if (humanMove === computerMove) {
+        return `You and the computer chose ${moves[humanMove]}, it\'s a draw!`;
     }
 
     let message;
-
-    if (humanMove === computerChoice) {
-        message = `You and the computer chose ${humanChoice.toLowerCase()}, it\'s a draw!`;
-    }
-    else if (humanMove === 1) {
-        if (computerChoice == 2) {
-            message = `You lose! Paper beats rock.`;
-        }
-        else if (computerChoice == 3) {
-            message = `You win! Rock beats scissors.`;
-        }
-    }
-    else if (humanMove === 2) {
-        if (computerChoice == 1) {
-            message = `You win! Paper beats rock.`;
-        }
-        else if (computerChoice == 3) {
-            message = `You lose! Scissors beats paper.`;
-        }
+    
+    if ((humanMove === 1 && computerMove === 2) ||
+        (humanMove === 2 && computerMove === 3) ||
+        (humanMove === 3 && computerMove === 1)) {
+        message = `You lose! `;
+        computerScore++;
     }
     else {
-        if (computerChoice == 1) {
-            message = `You lose! Rock beats scissors.`;
-        }
-        else if (computerChoice == 2) {
-            message = `You win! Scissors beats paper.`;
-        }
+        message = `You win! `;
+        humanScore++;
     }
-    console.log(message);
+
+    if ((humanMove === 1 && computerMove === 2) ||
+        (humanMove === 2 && computerMove === 1)) {
+        message += `Paper beats rock.`;
+    }
+    else if ((humanMove === 2 && computerMove === 3) ||
+             (humanMove === 3 && computerMove === 2)) {
+        message += `Scissors beats paper.`;
+    }
+    else {
+        message += `Rock beats scissors.`;
+    }
+
+    return message;
 }
 
-let humanSelection = getHumanChoice();
-let computerSelection = getComputerChoice();
-console.log('Computer choice: ' + computerSelection);
+function playRound(humanChoice, computerChoice) {
+    let humanMove = moves.indexOf(humanChoice.toLowerCase());
 
-playRound(humanSelection, computerSelection);
+    console.log(getMessage(humanMove, computerChoice));
+}
+
+function playGame() {
+
+    
+
+    for (let i = 0; i < 5; i++) {
+        console.log('Start round ' + (i+1));
+        let humanSelection = getHumanChoice();
+        let computerSelection = getComputerChoice();
+
+        console.log('You entered: ' + humanSelection);
+        console.log('Computer choice: ' + moves[computerSelection]);
+
+        playRound(humanSelection, computerSelection);
+
+        console.log(`Your score: ${humanScore}, computer score: ${computerScore}`);
+    }
+}
+
+playGame();
