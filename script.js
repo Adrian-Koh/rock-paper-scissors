@@ -51,33 +51,18 @@ function getMessage(humanMove, computerMove) {
 function playRound(humanChoice, computerChoice) {
     let humanMove = moves.indexOf(humanChoice.toLowerCase());
 
-    console.log(getMessage(humanMove, computerChoice));
+    const message = document.querySelector('#message');
+    message.textContent = getMessage(humanMove, computerChoice);
+
+    const humanScoreSpan = document.querySelector('#humanScore');
+    const computerScoreSpan = document.querySelector('#computerScore');
+
+    humanScoreSpan.textContent = humanScore;
+    computerScoreSpan.textContent = computerScore;
 }
 
-function playGame() {
-    
-    for (let i = 0; i < 5; i++) {
-        console.log('Start round ' + (i+1));
-        let humanSelection = getHumanChoice();
-        let computerSelection = getComputerChoice();
-
-        console.log('You entered: ' + humanSelection);
-        console.log('Computer choice: ' + moves[computerSelection]);
-
-        playRound(humanSelection, computerSelection);
-
-        console.log(`Your score: ${humanScore}, computer score: ${computerScore}`);
-    }
-
-    if (humanScore > computerScore) {
-        console.log(`You win!`);
-    }
-    else if (humanScore < computerScore) {
-        console.log(`The computer wins!`);
-    }
-    else {
-        console.log(`It's a draw!`);
-    }
-}
-
-playGame();
+const btnContainer = document.querySelector('#btnContainer');
+btnContainer.addEventListener('click', (event) => {
+    let target = event.target;
+    playRound(target.id, getComputerChoice());
+});
