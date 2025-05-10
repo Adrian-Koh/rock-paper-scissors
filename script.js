@@ -54,11 +54,33 @@ function playRound(humanChoice, computerChoice) {
     const message = document.querySelector('#message');
     message.textContent = getMessage(humanMove, computerChoice);
 
+    updateScores();
+
+    if (humanScore === 5 || computerScore === 5) {
+        announceWinner();
+    }
+}
+
+function updateScores() {
     const humanScoreSpan = document.querySelector('#humanScore');
     const computerScoreSpan = document.querySelector('#computerScore');
 
     humanScoreSpan.textContent = humanScore;
     computerScoreSpan.textContent = computerScore;
+}
+
+function announceWinner() {
+    const winnerNode = document.querySelector('#winner');
+    let message;
+
+    if (humanScore === 5) {
+        message = `Congratulations, you win!`;
+    }
+    else {
+        message = `Tough luck, you lose!`;
+    }
+
+    winnerNode.textContent = message;
 }
 
 const btnContainer = document.querySelector('#btnContainer');
